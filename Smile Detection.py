@@ -1,11 +1,18 @@
 import cv2
 
 
+#these is used for face detection so wer are import it using classifier..
 face_cascade = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
+
+#these is used for eye detection so we are also importing it also..
 eye_cascade = cv2.CascadeClassifier('haarcascade_eye.xml')
+
+#these is used for smile detection ..
 smile_cascade = cv2.CascadeClassifier('haarcascade_smile.xml')
 
 
+
+#making a function call for face detection and justing making a box for particular area
 def detect_faces(gray, frame, scale_factor=1.3, min_neighbors=5):
     faces = face_cascade.detectMultiScale(gray, scale_factor, min_neighbors)
     for (x, y, w, h) in faces:
@@ -17,17 +24,24 @@ def detect_faces(gray, frame, scale_factor=1.3, min_neighbors=5):
     return frame
 
 
+
+#making a function call for eye detection and justing making a box for particular area
 def detect_eyes(roi_gray, roi_color, scale_factor=1.1, min_neighbors=22):
     eyes = eye_cascade.detectMultiScale(roi_gray, scale_factor, min_neighbors)
     for (ex, ey, ew, eh) in eyes:
         cv2.rectangle(roi_color, (ex, ey), (ex+ew, ey+eh), (0, 255, 0), 2)
 
 
+
+#making a function call for smile detection and justing making a box for particular area
 def detect_smiles(roi_gray, roi_color, scale_factor=1.7, min_neighbors=22):
     smiles = smile_cascade.detectMultiScale(roi_gray, scale_factor, min_neighbors)
     for (sx, sy, sw, sh) in smiles:
         cv2.rectangle(roi_color, (sx, sy), (sx+sw, sy+sh), (0, 0, 255), 2)
 
+
+
+#calling a main function
 
 if __name__ == '__main__':
     # Doing some Face Recognition with the webcam
